@@ -1,3 +1,15 @@
 node_modules/
 dist/
 .vite/
+
+# Local configuration (sample templates may be committed)
+.env
+.env.*
+!.env.example
+
+# Backend virtual environments and caches
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
