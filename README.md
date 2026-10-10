@@ -1,37 +1,44 @@
-# FORM / STUDIO
+# Seminar — AI từ ảnh 2D sang mô hình 3D
 
-Frontend demo cho ứng dụng chuyển ảnh 2D thành mô hình 3D, giao diện tiếng Việt lấy cảm hứng từ mockup đã chốt.
+Repository chung được chia theo phần việc để frontend và backend phát triển độc lập.
 
-## Chạy tại máy
+```text
+frontend/              Giao diện React + Vite, viewer Three.js
+  src/                 Mã nguồn giao diện và viewer
+  package.json         Dependencies và scripts của frontend
+  package-lock.json    Khoá phiên bản dependencies frontend
+  plan-frontend.md     Kế hoạch giao diện
+  README.md            Tính năng và giới hạn bản demo
+backend/               Khu vực dành cho API và tích hợp AI
+  README.md            Phạm vi backend dự kiến
+.gitignore             Quy tắc bỏ qua file sinh ra và cấu hình riêng
+```
+
+## Chạy frontend
+
+Từ thư mục gốc repository:
 
 ```sh
+cd frontend
 npm install
 npm run dev
 ```
 
-Mở địa chỉ Vite in trong terminal. Kiểm tra bản build bằng `npm run build`.
+Kiểm tra bản build bằng `npm run build` trong `frontend/`.
 
-## Tính năng
+Chi tiết: [frontend/README.md](frontend/README.md).
 
-- Upload/kéo thả PNG, JPG, WEBP tối đa 10 MB; kiểm tra định dạng, dung lượng và giải mã ảnh.
-- Bốn mẫu 3D dựng bằng Three.js: robot, bình gốm, tên lửa, thỏ.
-- Mô phỏng job theo các bước, chất lượng nhanh/chi tiết, tuỳ chọn texture, huỷ tác vụ.
-- Viewer 3D thật: orbit, pan, zoom, reset, fullscreen, ảnh PNG.
-- Vật liệu xem trước, ánh sáng, background, wireframe, grid, auto-rotate.
-- Nhập GLB độc lập tối đa 50 MB; xuất GLB, OBJ hình học, STL hình học.
-- Gallery lọc/tìm kiếm, thư viện job với localStorage, mở lại mẫu và xác nhận xoá.
-- Responsive, nhãn truy cập, focus bàn phím và modal có focus trap.
+## Backend
 
-## Giới hạn demo
+Chưa triển khai backend. Thành viên phụ trách thêm mã nguồn, dependencies và cấu hình trong `backend/`. Xem [backend/README.md](backend/README.md).
 
-Chưa gọi AI: ảnh người dùng không được chuyển thành mesh. Kết quả là model mẫu được chọn. Chất lượng ảnh và texture là cấu hình job demo, chưa thay đổi hình học sinh ra. Import GLB hiện chỉ tồn tại trong phiên làm việc; thư viện lưu metadata của job mẫu, không lưu file của người dùng. Xuất .blend cần backend Blender; UI hướng dẫn nhập GLB vào Blender. OBJ không kèm MTL/texture. STL cần kiểm tra và sửa mesh trước khi in 3D.
+Frontend hiện mô phỏng quy trình AI; ảnh tải lên chưa được chuyển thành mô hình 3D thật.
 
-Font tải từ Google Fonts, có sans-serif dự phòng. Dependencies được bundle vào build, không phụ thuộc CDN runtime cho Three.js hoặc React.
+## Quy ước làm việc
 
-## Cấu trúc
+- Thay đổi giao diện, viewer và dependencies JavaScript trong `frontend/`.
+- Thay đổi API, xử lý job và tích hợp model AI trong `backend/`.
+- Thống nhất hợp đồng API giữa hai phần trước khi tích hợp.
+- Không commit dependencies đã cài, file build, môi trường ảo hoặc file `.env` chứa bí mật. Có thể commit `.env.example` với giá trị mẫu.
 
-- `src/main.jsx`: UI, quản lý job, thư viện, modal và thao tác file.
-- `src/scene.js`: Three.js scene, procedural models, controls, import/export.
-- `src/style.css`: thiết kế và responsive.
-
-API tích hợp sau: thay bộ đếm demo bằng `POST /jobs` và polling/SSE, tải URL GLB kết quả vào viewer, chuyển thư viện sang backend. Không đưa khoá API bí mật vào frontend.
+Việc tách thư mục giảm chồng chéo mã nguồn; các thay đổi trên cùng một file vẫn cần phối hợp khi merge.
